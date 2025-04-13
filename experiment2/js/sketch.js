@@ -1,6 +1,6 @@
 // sketch.js - purpose and description here
-// Author: Your Name
-// Date:
+// Author: William Wu
+// Date:  4/13/25
 
 // Here is how you might set up an OOP p5.js project
 // Note that p5.js looks for a file called sketch.js
@@ -31,7 +31,6 @@ function resizeScreen() {
   centerVert = canvasContainer.height() / 2; // Adjusted for drawing logic
   console.log("Resizing...");
   resizeCanvas(canvasContainer.width(), canvasContainer.height());
-  // redrawCanvas(); // Redraw everything based on new size
 }
 
 // setup() function is called once when the program starts
@@ -57,21 +56,15 @@ function windowResized() {
 
 function draw() {
   randomSeed(seed);
-
-  //background(100);
-
   noStroke();
 
   fill(skyColor);
   rect(0, 0, width, height / 2);
 
-  
-  
-  
   fill(255, 300);
   noStroke();
 
-  
+
   let numClouds = 5; 
 
   for (let i = 0; i < numClouds; i++) {
@@ -79,10 +72,8 @@ function draw() {
     let cloudX = (i * 100 + millis() * 0.02) % (width + 100) - 50;  
     // Each cloud spaced 100px apart, loops around screen
   
-    // Vertical position with small noise drift
     let cloudY = noise(i * 1000 + millis() * 0.00005) * height / 3;
   
-    // Size of cloud blob
     let cloudSize = random(30, 60);
 
     for (let j = 0; j < 1; j++) {
@@ -104,6 +95,7 @@ function draw() {
   ellipse(sunX, sunY, 150, 150);  // Actual sun  // Size of sun (adjust as needed)
       
     
+
   fill(stoneColor);
   beginShape();
   vertex(0, height);
@@ -140,10 +132,11 @@ function draw() {
   endShape(CLOSE);
   
   
+
   fill(rocks);
   noStroke();
 
-  const numRocks = 100 * random();  // Amount of rocks — tweak this for more/less
+  const numRocks = 100 * random();
   const scrub = mouseX/width;
   
   for (let i = 0; i < numRocks; i++) {
@@ -159,6 +152,7 @@ function draw() {
     ellipse(rockX, rockY, rockW, rockH);  
   }
 
+  
   fill(treeColor);
   const trees = 200*random();
   for (let i = 0; i < trees; i++) {
@@ -170,22 +164,3 @@ function draw() {
   }
 }
 
-/*
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Living Impression</title>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.min.js" integrity="sha512-b/htz6gIyFi3dwSoZ0Uv3cuv3Ony7EeKkacgrcVg8CMzu90n777qveu0PBcbZUA7TzyENGtU+qZRuFAkfqgyoQ==" crossorigin="anonymous"></script>
-    <script src="/script.js" defer></script>
-  </head>  
-  <body>
-    <script src="https://button.glitch.me/button.js" defer></script>
-  </body>
-</html>
-
-*/
