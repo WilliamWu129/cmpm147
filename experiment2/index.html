@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment X - Subject/Topic</title>
+	<title>Experiment 2 - p5.Js</title>
 
 	<!-- Use UTF character set, a good idea with any webpage -->
 	<meta charset="UTF-8" />
@@ -32,30 +32,47 @@
 	<main id="content">
 		<section>
 
-			<h1>Experiment X - Subject/Topic</h1>
+			<h1>Experiment 2 - p5.Js</h1>
 
 			<div class="minor-section">
 				<div id="canvas-container">
 					<!-- canvas will be added here -->
+					 
+					 
 				</div>
                 <div class="fullscreen-box">
                     <button id="fullscreen">Fullscreen</button>
                 </div>
 			</div>
 
+			
+			<div class="minor-section">
+				<div id="reference-image">
+				  <!-- Generated p5 canvas goes here -->
+				</div>
+			  
+				<div id="reference-container">
+				  <h2>Reference Image</h2>
+				  <img src="../img/mountainandForest.png" alt="Reference Forest" id="reference-image">
+				</div>
+			  </div>
+
 			<div class="minor-section">
 				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
+				<p>I am trying to replicate the landscape of the reference-image. I used p5.js the javascript library to tweak and create certain images. I also used noise and random to generate most of the pieces of the generation. I also used Perlin to create most of the landscape that was the foundation for everything else. </p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+				<p> The project utilizes Procdural generation to create a layered and natural landscape of a mountain with a forest. It uses p5.js to create rugged mountains, grass hills, moving clouds, scattered rocks and trees. The mountains and grass hills use Perlin noise to control the elevation of their peaks.
+					Rocks and trees are both scattered around randomly in the lower half of the page with them being larger the lower they were and vice versa. This created depth. Clouds would slowly drift to the right of the screen similar to the drifting of 
+					trees and rocksm but had also random y change similar to how clouds would move. The sun was simple as it was randomly generated above a certain y axis and had a ring around it.  
+				</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
+				<p>I worked on this by myself but took inspiration from the examples shown. I decided to use the example as a rough draft but change it up while adding many new features. </p>
 			</div>
 
 		</section>
