@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment X - Subject/Topic</title>
+	<title>Experiment 3 - Alternate Worlds</title>
 
 	<!-- Use UTF character set, a good idea with any webpage -->
 	<meta charset="UTF-8" />
@@ -23,7 +23,8 @@
 	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
     <script type="text/javascript" src="../js/site.js" DEFER></script>
 	<!-- Use me for a JavaScript OOP Project -->
-	<script type="text/javascript" src="./js/project.js" DEFER></script>
+	 <!--<script type="text/javascript" src="./js/project.js" DEFER></script>-->
+	
 	<!-- Use me for a p5.js project -->
 	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
 </head>
@@ -32,7 +33,7 @@
 	<main id="content">
 		<section>
 
-			<h1>Experiment X - Subject/Topic</h1>
+			<h1>Experiment 3 - Alternate Worlds</h1>
 
 			<div class="minor-section">
 				<div id="canvas-container">
@@ -40,22 +41,34 @@
 				</div>
                 <div class="fullscreen-box">
                     <button id="fullscreen">Fullscreen</button>
+					<button id="toggleModeButton">Switch to Dungeon</button>
                 </div>
+				<div class="minor-section">
+					<button id="reimagineButton">Reimagine</button>
+				  </div>
 			</div>
 
 			<div class="minor-section">
 				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
+				<p>Made a procedural generation of two elemeents, an Overworld and a basic dungeon plot.
+					The goal was to simulate a game world which is randomly generated each time creating variation. </p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+				<p>The project was built using P5.js and a tilesheet image to create the world. For the overworld generation
+					I created the grass tiles were the default being with Water always being surrounded by dirt. There was a river generation using Perlin noise for some curves.
+					For the Dungeon created a large room in the center first and then surrounded it with other random rooms with constraints to not overlap.
+					They are then connected with L shaped hallways.
+				</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
+				<p>The Experiment helped me understand generation better and the need to plan many things out. There were several difficulties that I encountered such as making the rooms connecting 
+					properly within the dungeons. Overal it was a interesting experiment. Also trying to implement a way for both projects to show up 
+					gave me a headache.
+				</p>
 			</div>
 
 		</section>
