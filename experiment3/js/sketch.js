@@ -228,7 +228,7 @@ function generateGrid(numCols, numRows) {
     }
   }
 
- Fill remaining with grass
+
   for (let y = 0; y < numRows; y++) {
     for (let x = 0; x < numCols; x++) {
       if (grid[y][x] === " ") {
