@@ -25,7 +25,7 @@ let tileSize = 16;
 let tilesetImage;
 
 function preload() {
-  tilesetImage = loadImage("../../img/tileset.png");
+  tilesetImage = loadImage("https://williamwu129.github.io/cmpm147/img/tileset.png");
 }
 
 class MyClass {
@@ -55,6 +55,10 @@ function setup() {
   canvas.parent("canvas-container");
   // resize canvas is the page is resized
 
+  $("#toggleFullscreen").click(() => {
+    let fs = fullscreen();
+    fullscreen(!fs);
+  });
 
   $("#toggleModeButton").click(() => {
   isDungeonMode = !isDungeonMode;
