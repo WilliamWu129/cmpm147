@@ -162,9 +162,9 @@ function p3_drawUnderwaterTile(i, j) {
   
   } else if (elevation < 0.7) {
     // Sandy seafloor 
-    let sandR = map(noise(i * 0.3, j * 0.3), 0, 1, 220, 255); // Red - stronger
-    let sandG = map(noise(i * 0.3 + 500, j * 0.3 + 500), 0, 1, 200, 230); // Green - high too
-    let sandB = map(noise(i * 0.3 + 1000, j * 0.3 + 1000), 0, 1, 120, 160); // Blue - lower to keep yellow
+    let sandR = map(noise(i * 0.3, j * 0.3), 0, 1, 220, 255); 
+    let sandG = map(noise(i * 0.3 + 500, j * 0.3 + 500), 0, 1, 200, 230); 
+    let sandB = map(noise(i * 0.3 + 1000, j * 0.3 + 1000), 0, 1, 120, 160); 
 
   fill(sandR, sandG, sandB);
   
