@@ -151,13 +151,26 @@ function p3_drawUnderwaterTile(i, j) {
 
   // Basic terrain
   if (elevation < 0.3) {
-    fill(0, 0, 80); // Deep water
+    // Deep water 
+    let deepColor = map(noise(i * 0.2, j * 0.2), 0, 1, 60, 100);
+    fill(0, 0, deepColor); // varies from dark to slightly lighter blue
+  
   } else if (elevation < 0.5) {
-    fill(0, 100, 200); // Coral reefs
+    // Coral reefs
+    let reefColor = map(noise(i * 0.5, j * 0.5), 0, 1, 150, 220);
+    fill(0, reefColor, 220); // more vivid variation in coral water color
+  
   } else if (elevation < 0.7) {
-    fill(220, 200, 150); // Sandy seafloor
+    // Sandy seafloor 
+    let sandR = map(noise(i * 0.3, j * 0.3), 0, 1, 220, 255); // Red - stronger
+    let sandG = map(noise(i * 0.3 + 500, j * 0.3 + 500), 0, 1, 200, 230); // Green - high too
+    let sandB = map(noise(i * 0.3 + 1000, j * 0.3 + 1000), 0, 1, 120, 160); // Blue - lower to keep yellow
+
+  fill(sandR, sandG, sandB);
+  
   } else {
-    fill(50, 50, 70); // Dark cliffs
+    // Dark cliffs (keep stable)
+    fill(50, 50, 70); 
   }
 
   beginShape();
@@ -188,7 +201,10 @@ function p3_drawUnderwaterTile(i, j) {
     
     translate(swimX, swimY);
     
-    fill(255, 200, 0);
+    let r = 200 + (XXH.h32('fishcolor:' + key, worldSeed) % 56);
+    let g = XXH.h32('fishcolorG:' + key, worldSeed) % 40;        
+    let b = XXH.h32('fishcolorB:' + key, worldSeed) % 40;        
+    fill(r, g, b);
     ellipse(1, 1, 10, 5); // fish body
     
     pop();
