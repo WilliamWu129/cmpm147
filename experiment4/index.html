@@ -73,17 +73,26 @@
 					 Learning the combinations needed to make a more natural landscape especially with the distance. Spawning to much clutter would sometimes overwhelme the canvas so a careful balance of 
 					size plus amount was the correct approach. Learned how to make a tile come out to make it look 3d. Drawing the faces in a different order would change how it looked. Changing the values of certain walls made it look like small buildings.  </p>
 			</div>
-
 		</section>
-
 		</div>
 		
 		<nav id="links" class="minor-section">
-			<!-- Put link back to homepage here. -->
-            <ul>
+			<ul>
                 <li><a href="../index.html">Home</a></li>
             </ul>
 		</nav>
 	</main>
+	<script>
+		document.getElementById("toggleFullscreen").addEventListener("click", () => {
+			const elem = document.documentElement;
+			if (!document.fullscreenElement) {
+				elem.requestFullscreen().catch(err => {
+					alert(`Error attempting to enable full-screen mode: ${err.message}`);
+				});
+			} else {
+				document.exitFullscreen();
+			}
+		});
+		</script>
 </body>
 </html>
