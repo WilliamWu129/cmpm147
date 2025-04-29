@@ -85,7 +85,7 @@ function setup() {
     rebuildWorld(input.value());
   });
 
-  createP("Arrow keys scroll. Clicking changes tiles.").parent("canvas-container");
+  createP("Arrow keys scroll. Clicking changes tiles. To change maps click 1-3.").parent("canvas-container");
 
   rebuildWorld(input.value());
 }
