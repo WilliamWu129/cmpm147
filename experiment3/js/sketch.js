@@ -24,6 +24,10 @@ let tileSize = 16;
 
 let tilesetImage;
 
+
+let variantMap = [];
+
+
 function preload() {
   tilesetImage = loadImage("https://williamwu129.github.io/cmpm147/img/tileset.png");
 }
@@ -136,7 +140,23 @@ function placeTile(i, j, ti, tj) {
 /* global placeTile */
 
 function generateGrid(numCols, numRows) {
+  
   let grid = Array(numRows).fill().map(() => Array(numCols).fill(" ")); // blank
+
+
+  variantMap = Array(numRows).fill().map(() => Array(numCols).fill({ row: 0, col: 1 }));
+
+  for (let y = 0; y < numRows; y++) {
+    for (let x = 0; x < numCols; x++) {
+      if (grid[y][x] === " ") {
+        grid[y][x] = "G"; // grass
+      }
+      if (grid[y][x] === "G") {
+        variantMap[y][x] = { row: 0, col: floor(random(1, 4)) }; // store grass variant
+      }
+    }
+  }
+
 
   // Optional: Generate river with 50% chance
   if (random() < 0.5) {
@@ -182,12 +202,12 @@ function generateGrid(numCols, numRows) {
     grid = newGrid;
   }
 
-
+noiseSeed(floor(random(10000)));
  
   
   for (let y = 0; y < numRows; y++) {
     for (let x = 0; x < numCols; x++) {
-      if (grid[y][x] !== " ") continue;
+      if (grid[y][x] !== "G") continue;
 
       // Create a per-tile radius between 3 and 8 based on noise
       let localRadius = floor(map(noise(x * 0.1, y * 0.1), 0, 1, 3, 10));
@@ -208,38 +228,105 @@ function generateGrid(numCols, numRows) {
         }
       }
 
+
+
       if (closestWaterDist < localRadius) {
         // Falloff within the localRadius
         let falloff = map(closestWaterDist, 1, localRadius, 1.0, 0.0, true);
         let noiseVal = noise((x + 1000) * 0.1, (y + 1000) * 0.1); // use offset to vary dirt noise
         if (noiseVal < falloff) {
           grid[y][x] = "D";
+        
+          if (closestWaterDist <= 2) {
+            // Always use dark dirt very close to water
+            variantMap[y][x] = { row: 4, col: floor(random(0, 4)) };
+          } else if (closestWaterDist <= 4) {
+            if (random() < 0.25) { // 25% chance
+              variantMap[y][x] = { row: 4, col: floor(random(0, 4)) };
+            } else {
+              variantMap[y][x] = { row: 3, col: floor(random(0, 4)) };
+            }
+          } else {
+            
+            variantMap[y][x] = { row: 3, col: floor(random(0, 4)) };
+          }
         }
+        
       }
     }
   }
   for (let y = 0; y < numRows; y++) {
     for (let x = 0; x < numCols; x++) {
-      if (grid[y][x] !== "G") continue; // only consider grass tiles
-
-      // Chunky patches using noise
+      if (grid[y][x] !== "G") continue; // only affect grass
+  
       let noiseVal = noise((x + 5000) * 0.07, (y + 5000) * 0.07);
-
-      // Only some areas — and bigger blobs using noise threshold
-      if (noiseVal > 0.55 && noiseVal < 0.65) {
+  
+      // Higher threshold range = larger, smoother clumps
+      if (noiseVal > 0.50 && noiseVal < 0.7) {
         grid[y][x] = "D";
+        variantMap[y][x] = { row: 3, col: floor(random(0, 4)) }; // dirt has variants 0–3
       }
     }
   }
 
+
+  for (let y = 0; y < numRows; y++) {
+    for (let x = 0; x < numCols; x++) {
+      if (grid[y][x] !== "G") continue;
+  
+      let closestDirtDist = Infinity;
+  
+      for (let dy = -4; dy <= 4; dy++) {
+        for (let dx = -4; dx <= 4; dx++) {
+          let ny = y + dy;
+          let nx = x + dx;
+          if (nx >= 0 && nx < numCols && ny >= 0 && ny < numRows) {
+            if (grid[ny][nx] === "D") {
+              let dist = abs(dx) + abs(dy);
+              if (dist < closestDirtDist) {
+                closestDirtDist = dist;
+              }
+            }
+          }
+        }
+      }
+  
+      if (closestDirtDist <= 5) {
+        let noiseVal = noise((x + 9000) * 0.2, (y + 9000) * 0.2); // increased scale for more variation
+        let falloff = map(closestDirtDist, 1, 5, 0.9, 0.2, true); // tighter blending
+  
+        // Add jitter so it's not always a clean edge
+        if (noiseVal + random(-0.05, 0.05) < falloff) {
+          variantMap[y][x] = { row: 1, col: floor(random(1, 4)) }; // dark grass
+        }
+      }
+    }
+  }
+  
+  for (let y = 0; y < numRows; y++) {
+    for (let x = 0; x < numCols; x++) {
+      if (grid[y][x] !== "G") continue;
+  
+      let noiseVal = noise((x + 3000) * 0.07, (y + 3000) * 0.07);
+  
+      if (noiseVal > 0.58 && noiseVal < 0.61) {
+        variantMap[y][x] = { row: 1, col: floor(random(1, 4)) }; // dark grass
+      }
+    }
+  }
 
   for (let y = 0; y < numRows; y++) {
     for (let x = 0; x < numCols; x++) {
       if (grid[y][x] === " ") {
         grid[y][x] = "G"; // grass
+
+        
       }
     }
   }
+
+
+  
 
   return grid;
 }
@@ -283,6 +370,7 @@ function generateRiver(grid, numCols, numRows) {
           // Center tile always, side tiles only sometimes
           if (distance === 0 || (distance === 1 && random() < 0.5)) {
             grid[ny][nx] = "W";
+            variantMap[ny][nx] = floor(random(0, 3));
           }
         }
       }
@@ -319,11 +407,14 @@ function drawGrid(grid) {
       let variation = (i + j) % 4;
 
       if (code === "G") {
-        placeTile(i, j, 1 , 0); // grass row
+        let variant = variantMap[i][j];
+        placeTile(i, j, variant.col, variant.row);
       } else if (code === "D") {
-        placeTile(i, j, 0, 3); // dirt row
+        let dirtVariant = variantMap[i][j]; // 0 to 3
+        placeTile(i, j, dirtVariant.col, dirtVariant.row); // dirt tiles are in row 3
       } else if (code === "W") {
-        placeTile(i, j, 3, 14); 
+        let waterVariant = variantMap[i][j]; // 0 to 2
+        placeTile(i, j, 0 + waterVariant, 14); // water row starts at tile 3
       }
     }
   }
@@ -334,12 +425,16 @@ function drawGrid(grid) {
 
 
 
+// --------------------------------------------------------------------
+let chestPositions = []; 
 
 
 
 
 
 function generateDungeon(numCols, numRows) {
+  chestPositions = []; 
+
   let grid = Array(numRows).fill().map(() => Array(numCols).fill("_")); // background fill
 
   let rooms = [];
@@ -351,6 +446,8 @@ function generateDungeon(numCols, numRows) {
   let centerRoomH = 8;
   let centerX = floor(numCols / 2 - centerRoomW / 2);
   let centerY = floor(numRows / 2 - centerRoomH / 2);
+  
+
 
   for (let y = centerY; y < centerY + centerRoomH; y++) {
     for (let x = centerX; x < centerX + centerRoomW; x++) {
@@ -359,6 +456,9 @@ function generateDungeon(numCols, numRows) {
   }
 
   rooms.push({ x: centerX, y: centerY, w: centerRoomW, h: centerRoomH });
+
+
+
 
   for (let attempt = 0; attempt < 100 && rooms.length < maxRooms; attempt++) {
     let roomWidth = floor(random(5, 15));
@@ -386,6 +486,17 @@ function generateDungeon(numCols, numRows) {
     }
 
     rooms.push({ x: roomX, y: roomY, w: roomWidth, h: roomHeight });
+
+    let chestX = floor(roomX + roomWidth / 2);
+    let chestY = floor(roomY + roomHeight / 2);
+    chestPositions.push({
+      x: chestX,
+      y: chestY,
+      col: floor(random(0, 4)), 
+      row: 29 
+    });
+
+
   }
 
   for (let i = 0; i < rooms.length - 1; i++) {
@@ -465,4 +576,9 @@ function drawDungeonGrid(grid) {
       }
     }
   }
+
+  for (let chest of chestPositions) {
+    placeTile(chest.y, chest.x, chest.col, chest.row);
+  }
+
 }
