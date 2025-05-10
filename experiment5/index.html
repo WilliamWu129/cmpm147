@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ex05: Evolutionary Impressions</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/site.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <script src="./js/my_design.js" defer></script>
+    <script src="./js/sketch.js" defer></script>
+  </head>
+  <body>
+    <main id="content">
+      <section>
+        <h1>Ex05: Evolutionary Impressions</h1>
+
+        <div class="minor-section">
+          <div id="canvas-container"></div>
+          <div class="fullscreen-box">
+            <button id="toggleFullscreen">Fullscreen</button>
+          </div>
+        </div>
+
+        <!-- UI controls -->
+        <div class="minor-section">
+          <select id="inspiration-select"></select>
+          <button id="restart">Restart</button>
+        </div>
+
+        <div class="minor-section">
+          <label for="mutation-slider">Mutation rate: <span id="mutation-label">100</span>%</label><br>
+          <input type="range" id="mutation-slider" min="1" max="100" value="100" />
+        </div>
+
+        <div class="minor-section">
+          <p>Active score: <span id="active-score">0</span></p>
+          <p>Exploration rate: <span id="fpsCounter">0</span> fps</p>
+          <p>Best score: <span id="best-score">0</span></p>
+        </div>
+
+        <div id="best-preview" class="minor-section"></div>
+        <div id="memory" class="minor-section" data-max-items="16"></div>
+
+        <div class="minor-section description-section">
+          <h2>Description</h2>
+          <p>...</p>
+        </div>
+        <div class="minor-section">
+          <h2>Technical</h2><p>...</p>
+        </div>
+        <div class="minor-section">
+          <h2>Reflection</h2><p>...</p>
+        </div>
+      </section>
+      <nav id="links" class="minor-section">
+        <ul><li><a href="../index.html">Home</a></li></ul>
+      </nav>
+    </main>
+    <script>
+      document.getElementById("toggleFullscreen").addEventListener("click", () => {
+        const elem = document.documentElement;
+        if (!document.fullscreenElement) elem.requestFullscreen();
+        else document.exitFullscreen();
+      });
+    </script>
+  </body>
+</html>
