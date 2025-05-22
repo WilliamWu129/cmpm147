@@ -30,7 +30,7 @@ function initDesign(inspiration) {
      const scaleX = inspiration.image.width / width;
     const scaleY = inspiration.image.height / height;
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 1250; i++) {
       let w = random(width / 20, width / 5);
       let h = random(height / 20, height / 5);
       let x = random(width - w);
@@ -46,7 +46,7 @@ function initDesign(inspiration) {
     }
   }
   else if (inspiration.name === "Car") {
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < 1000; i++) {
       let w = random(width / 10, width / 5);
       let h = random(height / 10, height / 5);
       let x = random(width - w);
@@ -65,7 +65,7 @@ function initDesign(inspiration) {
   }
   
   else if (inspiration.name === "Train Wreck") {
-  for (let i = 0; i < 500; i++) {
+  for (let i = 0; i < 1500; i++) {
     design.fg.push({
       x: random(width),
       y: random(height),
@@ -77,7 +77,7 @@ function initDesign(inspiration) {
   }
 }
   else {
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 1500; i++) {
       design.fg.push({
         x: random(width),
         y: random(height),
